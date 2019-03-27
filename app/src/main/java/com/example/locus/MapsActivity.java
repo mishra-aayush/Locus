@@ -154,11 +154,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                 sb.append(address.getAddressLine(i)).append("\n");
             }
-            sb.append(address.getSubThoroughfare()).append("\n");
-            sb.append(address.getThoroughfare()).append("\n");
-            sb.append(address.getLocality()).append("\n");
-            sb.append(address.getPostalCode()).append("\n");
-            sb.append(address.getCountryName());
+            if(address.getSubThoroughfare() != null){
+                sb.append(address.getSubThoroughfare()).append("\n");
+            }
+            if(address.getThoroughfare() != null) {
+                sb.append(address.getThoroughfare()).append("\n");
+            }
+            if(address.getLocality() != null) {
+                sb.append(address.getLocality()).append("\n");
+            }
+            if(address.getPostalCode() != null) {
+                sb.append(address.getPostalCode()).append("\n");
+            }
+            if(address.getCountryCode() != null) {
+                sb.append(address.getCountryName());
+            }
 
             if ("".equals(address.toString())) {
 
