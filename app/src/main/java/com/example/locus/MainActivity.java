@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = findViewById(R.id.listTextView);
+        final ListView listView = findViewById(R.id.listTextView);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.locus", Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.locus", Context.MODE_PRIVATE);
 
         ArrayList<String> latitudes = new ArrayList<>();
         ArrayList<String> longitudes = new ArrayList<>();
@@ -75,15 +75,17 @@ public class MainActivity extends AppCompatActivity {
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
                 adb.setTitle("Delete?");
                 adb.setMessage("Are you sure you want to delete " + position);
-                final int positionToRemove = position;
+                //final int positionToRemove = position;
                 adb.setNegativeButton("Cancel", null);
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        place.remove(positionToRemove);
+                        place.remove(position);
+                        locations.remove(position);
+                        //sharedPreferences.edit().remove().commit();
                         arrayAdapter.notifyDataSetChanged();
                     }
                 });
@@ -91,6 +93,5 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 }

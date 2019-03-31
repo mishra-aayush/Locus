@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -59,7 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(!"Your Location".equals(title)){
             mMap.addMarker(new MarkerOptions().position(userLocation).title(title));
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18));
     }
 
     @Override
@@ -133,7 +135,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             placeLocation.setLongitude(MainActivity.locations.get(intent.getIntExtra("placeNumber", 0)).longitude);
 
             centreMapOnLocation(placeLocation, MainActivity.place.get(intent.getIntExtra("placeNumber", 0)));
-
         }
 
 
@@ -157,7 +158,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 sb.append(address.getAddressLine(i)).append("\n");
             }
             if(address.getSubThoroughfare() != null){
-                sb.append(address.getSubThoroughfare()).append("\n");
+                sb.append(address.getSubThoroughfare()).append(" ");
             }
             if(address.getThoroughfare() != null) {
                 sb.append(address.getThoroughfare()).append("\n");
@@ -165,19 +166,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(address.getLocality() != null) {
                 sb.append(address.getLocality()).append("\n");
             }
-            if(address.getPostalCode() != null) {
-                sb.append(address.getPostalCode()).append("\n");
-            }
-            if(address.getCountryCode() != null) {
-                sb.append(address.getCountryName());
-            }
+//            if(address.getPostalCode() != null) {
+//                sb.append(address.getPostalCode()).append("\n");
+//            }
+//            if(address.getCountryCode() != null) {
+//                sb.append(address.getCountryName());
+//            }
 
-            if ("".equals(address.toString())) {
-
+            if ((TextUtils.isEmpty(sb.toString()))) {
                 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm yyyy-MM-dd", Locale.getDefault());
-
                 sb.append(sdf.format(new Date()));
-
             }
 
             mMap.addMarker(new MarkerOptions().position(latLng).title(sb.toString())).showInfoWindow();
